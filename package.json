@@ -1,0 +1,15 @@
+{
+  "name": "motor-app",
+  "version": "1.0.0",
+  "description": "App that works with jhonny-five through arduino to rotate a motor left or right",
+  "main": "listenStep.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Massamba Diouf",
+  "license": "MIT",
+  "dependencies": {
+    "johnny-five": "^0.9.19",
+    "spacebro-client": "0.0.11"
+  }
+}
