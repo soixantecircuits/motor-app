@@ -1,7 +1,8 @@
 const spacebroClient = require('spacebro-client')
 var five = require("johnny-five")
 var configs = five.Motor.SHIELD_CONFIGS.ARDUINO_MOTOR_SHIELD_R3_1
-board = new five.Board()
+var lastDirection = null
+var board = new five.Board()
 
 board.on("ready", function() {
     var motor = new five.Motor(configs.A)
@@ -10,12 +11,17 @@ board.on("ready", function() {
         name: 'step',
         trigger: function (data) {
           if (data.data == 1) {
-            motor.forward(255)
-            console.log('Motor moving forward...')
+            if (activated ('forward')) {
+              stop
+            }
+              motor.forward(255)
+              console.log('Motor moving forward...')
           }
           else if (data.data == -1){
-            motor.reverse(255)
-            console.log('Motor moving backwards...')
+            if (activated ('reverse')) {
+              motor.reverse(255)
+              console.log('Motor moving backwards...')
+            }
           }
         }
       }
@@ -25,24 +31,28 @@ board.on("ready", function() {
 
     motor.on("forward", function(err, timestamp) {
       // demonstrate braking after 5 seconds
-      board.wait(5000, function() {
-        motor.brake()
-        console.log('braking...')
+      lastDirection = 'forward'
+      board.wait(2000, function() {
+        motor.stop()
       })
     })
 
-    motor.on("brake", function(err, timestamp) {
+    motor.on("stop", function(err, timestamp) {
       // Release the brake after .1 seconds
-      board.wait(100, function() {
-        motor.stop()
-        })
+      console.log('stop...')
     })
 
     motor.on("reverse", function(err, timestamp) {
       // demonstrate braking after 5 seconds
-      board.wait(5000, function() {
-        motor.brake()
-      })
+      if (activated ('reverse')) {
+        motor.stop
+        setTimeout(function () { motor.reverse }, 1000)
+      } else {
+        lastDirection = 'backwards'
+        board.wait(2000, function() {
+          motor.stop()
+        })
+      }
     })
 })
 

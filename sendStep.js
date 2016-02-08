@@ -9,14 +9,14 @@ var actionList = [
   }
 ]
 
-spacebroClient.iKnowMyMaster('127.0.0.1', '8888');
+spacebroClient.iKnowMyMaster('127.0.0.1', '8888')
 spacebroClient.registerToMaster(actionList, 'step-direction')
 
 setInterval(function () {
-  spacebroClient.emit('step', {data: '-1'})
-}, 2000)
+  spacebroClient.emit('step', {data: '1'})
+}, 6000)
 
 setInterval(function () {
-  spacebroClient.emit('step', {data: '1'})
-}, 3000)
+  spacebroClient.emit('step', {data: '-1'})
+}, 9000)
 
