@@ -19,4 +19,3 @@ setInterval(function () {
 setInterval(function () {
   spacebroClient.emit('step', {step: '-1'})
 }, 9000)
-
