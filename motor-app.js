@@ -1,7 +1,11 @@
+const config = require('./config.json')
 const spacebroClient = require('spacebro-client')
+const timePerStep = config.timePerStep
+const serviceName = config.serviceName
 var five = require('johnny-five')
 var configs = five.Motor.SHIELD_CONFIGS.ARDUINO_MOTOR_SHIELD_R3_1
 var board = new five.Board()
+var busy = false
 
 board.on('ready', function () {
   var motor = new five.Motor(configs.A)
@@ -9,16 +13,19 @@ board.on('ready', function () {
     {
       name: 'step',
       trigger: function (data) {
-        if (data.step == 1) {
+        if (busy === true) {
+          console.log('Motor is currently busy...')
+        } else if (data.step === 1 && busy === false) {
+          busy = true
           motor.forward(255)
-        } else if (data.step == -1) {
+        } else if (data.step === -1 && busy === false) {
+          busy = true
           motor.reverse(255)
         }
       }
     }
   ]
-  spacebroClient.iKnowMyMaster('127.0.0.1', '8888')
-  spacebroClient.registerToMaster(actionList, 'motor-app')
+  spacebroClient.registerToMaster(actionList, 'motor-app', serviceName)
 
   motor.on('forward', function (err, timestamp) {
     if (err) {
@@ -26,8 +33,9 @@ board.on('ready', function () {
       return (err)
     }
     console.log('Motor moving forward...')
-    board.wait(2000, function () {
+    board.wait(timePerStep, function () {
       motor.stop()
+      busy = false
     })
   })
 
@@ -45,8 +53,9 @@ board.on('ready', function () {
       return (err)
     }
     console.log('Motor moving backwards...')
-    board.wait(2000, function () {
+    board.wait(timePerStep, function () {
       motor.stop()
+      busy = false
     })
   })
 })
