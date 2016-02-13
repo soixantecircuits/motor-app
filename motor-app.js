@@ -11,14 +11,14 @@ board.on('ready', function () {
   var motor = new five.Motor(configs.A)
   var actionList = [
     {
-      name: 'step',
+      name: 'hStep',
       trigger: function (data) {
         if (busy === true) {
           console.log('Motor is currently busy...')
-        } else if (data.step === 1 && busy === false) {
+        } else if (data.hStep === 1 && busy === false) {
           busy = true
           motor.forward(255)
-        } else if (data.step === -1 && busy === false) {
+        } else if (data.hStep === -1 && busy === false) {
           busy = true
           motor.reverse(255)
         }
