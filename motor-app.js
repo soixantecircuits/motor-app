@@ -15,10 +15,10 @@ board.on('ready', function () {
       trigger: function (data) {
         if (busy === true) {
           console.log('Motor is currently busy...')
-        } else if (data.hStep === 1 && busy === false) {
+        } else if (data.value === 1 && busy === false) {
           busy = true
           motor.forward(255)
-        } else if (data.hStep === -1 && busy === false) {
+        } else if (data.value === -1 && busy === false) {
           busy = true
           motor.reverse(255)
         }
