@@ -11,7 +11,7 @@ board.on('ready', function () {
   var motor = new five.Motor(configs.A)
   var actionList = [
     {
-      name: 'hStep',
+      name: 'motor-step',
       trigger: function (data) {
         if (busy === true) {
           console.log('Motor is currently busy...')
