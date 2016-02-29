@@ -3,7 +3,7 @@ const spacebroClient = require('spacebro-client')
 const timePerStep = config.timePerStep
 const serviceName = config.serviceName
 var five = require('johnny-five')
-var configs = five.Motor.SHIELD_CONFIGS.ARDUINO_MOTOR_SHIELD_R3_1
+var configs = five.Motor.SHIELD_CONFIGS.SPARKFUN_ARDUMOTO
 var board = new five.Board()
 var busy = false
 
