@@ -60,3 +60,7 @@ board.on('ready', function () {
   })
 })
 
+board.on("close", function() {
+  console.log("[CONNECTION] - is closed")
+  process.exit()
+})
