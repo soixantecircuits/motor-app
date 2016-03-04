@@ -17,10 +17,10 @@ board.on('ready', function () {
           console.log('Motor is currently busy...')
         } else if (data.value === 1 && busy === false) {
           busy = true
-          motor.forward(150)
+          motor.forward(120)
         } else if (data.value === -1 && busy === false) {
           busy = true
-          motor.reverse(150)
+          motor.reverse(120)
         }
       }
     }
